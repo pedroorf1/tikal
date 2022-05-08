@@ -1,0 +1,5 @@
+[Bb]node_modules*
+[Dd]ist*
+[Bb]uild*
+[Bb]in*
+package-lock.json

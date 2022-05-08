@@ -1,0 +1,14 @@
+# fix all end of alines LF
+* text = false
+*.css       eol=lf
+*.html      eol=lf
+*.js        eol=lf
+*.ts        eol=lf
+*.json      eol=lf
+*.*fig      eol=lf
+*.*ignore   eol=lf
+*.env       eol=lf
+*.java      eol=lf
+*.htm       eol=lf
+*.def       eol=lf
+*.txt       eol=lf
