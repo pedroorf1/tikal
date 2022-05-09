@@ -21,7 +21,6 @@ describe("TESTE API NOTAS - TEACHER ROUTES TESTE", () => {
   test("should have a list of stundents", async () => {
     const response = await supertest(App).get("/professor");
     expect(response.statusCode).toBe(200);
-    expect(response.body).toBeInstanceOf(Array);
     return;
   });
 });
@@ -31,6 +30,7 @@ describe("TESTE API NOTAS - STUDENTS ROUTES TESTE", () => {
     const response = await supertest(App).post("/alunos").send({
       name: "Raimundo fernando",
     });
+    expect(response.body.message).toEqual("Aluno cadastrado");
     expect(response.statusCode).toBe(200);
     return;
   });

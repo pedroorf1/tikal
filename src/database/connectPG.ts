@@ -22,10 +22,7 @@ async function connect() {
   return pool.connect();
 }
 
-async function SQL(
-  params: string,
-  response: (error: Error, response: Response) => any
-) {
+async function SQL(params: string) {
   console.info(
     "-------------------------------------------------------------------------------------------------------------------------------------------------"
   );
@@ -35,10 +32,13 @@ async function SQL(
 
   const client = await connect();
   try {
-    // await client.release();
-    console.info("SQL params: ", params);
-    const res = await client.query(params, response);
-    return res.rows;
+    const response = await client.query(params);
+    if (response.error) {
+      // console.info("ERRR:", err);
+      return { error: response.error.message };
+    }
+    console.info("LOG LOG LOG LOG:", response);
+    return response;
   } catch (err) {
     console.clear();
     console.info(`Erro ${err}`);
