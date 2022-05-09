@@ -4,16 +4,15 @@ import SQL from "../database/connectPG";
 //class
 const Controller = class {
   static async listAlunos(req: Request, res: Response) {
-    const result = await SQL("SELECT * FROM alunos");
-    if (result.error) {
-      res.status(403).send({
-        message: "Houveram erros na consulta",
-        err: result.error,
-      });
-      return;
-    }
-    res.status(200).send(result);
-    return;
+    await SQL("SELECT * FROM alunos", (err, resp) => {
+      if (err) {
+        res.status(400).send({ error: err });
+        return;
+      }
+      // const data = { rows: resp["rows"] };
+      res.status(200).send(resp);
+      return resp;
+    });
   }
   //INSERIR NOTAS
   static async insertNotas(req: Request, res: Response) {
@@ -27,7 +26,15 @@ const Controller = class {
     }
 
     const verifyAlunoExists = await SQL(
-      "SELECT * FROM alunos WHERE id =" + { alunoId }
+      "SELECT * FROM alunos WHERE id =" + { alunoId },
+      (err, resp) => {
+        if (err) {
+          res.status(400).send({ error: err });
+          return err;
+        }
+        console.info("Minha resposta:", resp);
+        return resp;
+      }
     );
 
     if (verifyAlunoExists.rowCount < 1) {

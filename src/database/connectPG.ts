@@ -22,24 +22,30 @@ async function connect() {
   return pool.connect();
 }
 
-async function SQL(params: string) {
+async function SQL(
+  params: string,
+  response: (error: Error, response: Response) => any
+) {
+  console.info(
+    "-------------------------------------------------------------------------------------------------------------------------------------------------"
+  );
   if (!params) {
     return { message: "A query precisa ser enviada" };
   }
+
+  const client = await connect();
   try {
-    const client = await connect();
-    const res = await client.query(params);
-    client.release();
-    client.end();
-    console.table(res.rows);
-    const now = new Date();
-    const date =
-      now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
-    console.info(`${date}`);
+    // await client.release();
+    console.info("SQL params: ", params);
+    const res = await client.query(params, response);
     return res.rows;
   } catch (err) {
-    console.info(`Erro ${err.message}`);
-    return { message: "Erro ao tentar buscar os dados", error: err.message };
+    console.clear();
+    console.info(`Erro ${err}`);
+    return { error: err.message };
+  } finally {
+    await client.release();
+    // client.end();
   }
 }
 
