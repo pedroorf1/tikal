@@ -47,11 +47,9 @@ describe("TESTE API NOTAS - STUDENTS ROUTES TESTE", () => {
     expect(response.statusCode).toBe(200);
     return;
   });
-  test.only("should have update full notes for student", async () => {
+  test("should have update full notes for student", async () => {
     console.clear();
-    console.log(
-      "===================\n===================\n===================\n===================\n"
-    );
+    console.log("===================\n===================\n");
     const response = await supertest(App).post("/professor").send({
       alunoId: 2,
       nota1: 5.9,
@@ -62,6 +60,21 @@ describe("TESTE API NOTAS - STUDENTS ROUTES TESTE", () => {
     console.debug("RESPOSTA: ", response.body);
     expect(response.body).toHaveProperty("message");
     expect(response.statusCode).toBe(200);
+    return;
+  });
+  test.only("should have satus code 401 couse values have undefined", async () => {
+    console.clear();
+    console.log("===================\n===================\n");
+    const response = await supertest(App).post("/professor").send({
+      alunoId: 2,
+      nota1: undefined,
+      nota2: 5.5,
+      nota3: 7.0,
+      nota4: 8.0,
+    });
+    console.debug("RESPOSTA: ", response.body);
+    expect(response.body).toHaveProperty("message");
+    expect(response.statusCode).toBe(401);
     return;
   });
 });

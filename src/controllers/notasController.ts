@@ -9,7 +9,6 @@ const Controller = class {
       res.status(400).send({ error: resp.error.message });
       return;
     }
-    // const data = { rows: resp["rows"] };
     res.status(200).send(resp);
     return resp;
   }
