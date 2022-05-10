@@ -4,6 +4,7 @@ import App from "../src/server/server";
 
 describe("TESTE API NOTAS - HOME ROUTES TESTE", () => {
   console.clear();
+  console.log(new Date());
   // jest.setTimeout(10000);
   test("To have a property message", async () => {
     const response = await supertest(App).get("/");
@@ -31,6 +32,35 @@ describe("TESTE API NOTAS - STUDENTS ROUTES TESTE", () => {
       name: "Raimundo fernando",
     });
     expect(response.body.message).toEqual("Aluno cadastrado");
+    expect(response.statusCode).toBe(200);
+    return;
+  });
+  test("should have add full notes for student", async () => {
+    const response = await supertest(App).post("/professor").send({
+      alunoId: 1,
+      nota1: 5.5,
+      nota2: 5.5,
+      nota3: 5.5,
+      nota4: 5.5,
+    });
+    expect(response.body).toHaveProperty("message");
+    expect(response.statusCode).toBe(200);
+    return;
+  });
+  test.only("should have update full notes for student", async () => {
+    console.clear();
+    console.log(
+      "===================\n===================\n===================\n===================\n"
+    );
+    const response = await supertest(App).post("/professor").send({
+      alunoId: 2,
+      nota1: 5.9,
+      nota2: 5.5,
+      nota3: 7.0,
+      nota4: 8.0,
+    });
+    console.debug("RESPOSTA: ", response.body);
+    expect(response.body).toHaveProperty("message");
     expect(response.statusCode).toBe(200);
     return;
   });

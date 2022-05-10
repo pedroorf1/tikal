@@ -16,31 +16,65 @@ const Controller = class {
   //INSERIR NOTAS
   static async insertNotas(req: Request, res: Response) {
     const { alunoId, nota1, nota2, nota3, nota4 } = req.body;
-
     if (!alunoId || !nota1 || !nota2 || !nota3 || !nota4) {
-      res.status(403).send({
+      res.status(401).send({
         message: "Dados invalidos, verifque campos que não foram preenchidos",
       });
       return;
     }
+    const verifyNotaExists = await notasExists(alunoId);
 
-    const verifyAlunoExists = await alunoExists(alunoId);
-
-    if (verifyAlunoExists) {
-      res
-        .status(403)
-        .send({ message: "Aluno não foi encontrado em nosso banco de dados" });
+    if (!verifyNotaExists) {
+      const response = await SQL(
+        "INSERT INTO notas VALUES(DEFAULT," +
+          alunoId +
+          "," +
+          nota1 +
+          "," +
+          nota2 +
+          "," +
+          nota3 +
+          "," +
+          nota4 +
+          ")"
+      );
+      res.status(200).send({
+        message: "Notas cadastradas para este aluno",
+        response,
+        verifyNotaExists,
+      });
       return;
     }
+
+    //update notas
+    const responseUpdateNota = await SQL(
+      "UPDATE notas SET nota1=" +
+        nota1 +
+        ",nota2=" +
+        nota2 +
+        ",nota3=" +
+        nota3 +
+        ",nota4=" +
+        nota4 +
+        " WHERE idaluno ='" +
+        alunoId +
+        "'"
+    );
+    res.status(200).send({
+      message: "Notas atulizadas para este aluno",
+      responseUpdateNota,
+    });
   }
 };
 
-async function alunoExists(alunoId: string) {
-  const exists = await SQL("SELECT * FROM alunos WHERE id =" + { alunoId });
-  if (exists.rowCount < 1) {
-    return false;
+async function notasExists(alunoId: string) {
+  const exists = await SQL(
+    "SELECT * FROM notas WHERE idaluno ='" + alunoId + "' LIMIT 1"
+  );
+  if (exists) {
+    return true;
   }
-  return true;
+  return false;
 }
 
 export default Controller;

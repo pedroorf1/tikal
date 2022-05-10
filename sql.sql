@@ -6,10 +6,10 @@ CREATE TABLE alunos(
 CREATE TABLE notas(
   id serial primary key,
   idAluno bigint,
-  nota1 decimal(2,2),
-  nota2 decimal(2,2),
-  nota3 decimal(2,2),
-  nota4 decimal(2,2),
+  nota1 decimal(4,2),
+  nota2 decimal(4,2),
+  nota3 decimal(4,2),
+  nota4 decimal(4,2),
   foreign key (idAluno) references alunos(id)
 )
 
