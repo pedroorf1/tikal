@@ -35,6 +35,12 @@ describe("TESTE API NOTAS - STUDENTS ROUTES TESTE", () => {
     expect(response.statusCode).toBe(200);
     return;
   });
+  test.only("should have get stundent list and points", async () => {
+    const response = await supertest(App).get("/alunos");
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.statusCode).toBe(200);
+    return;
+  });
   test("should have add full notes for student", async () => {
     const response = await supertest(App).post("/professor").send({
       alunoId: 1,
@@ -62,7 +68,7 @@ describe("TESTE API NOTAS - STUDENTS ROUTES TESTE", () => {
     expect(response.statusCode).toBe(200);
     return;
   });
-  test.only("should have satus code 401 couse values have undefined", async () => {
+  test("should have satus code 401 couse values have undefined", async () => {
     console.clear();
     console.log("===================\n===================\n");
     const response = await supertest(App).post("/professor").send({

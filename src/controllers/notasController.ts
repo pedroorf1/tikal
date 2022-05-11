@@ -12,6 +12,16 @@ const Controller = class {
     res.status(200).send(resp);
     return resp;
   }
+  //lista de alunos e notas
+  static async listAlunosAndPoints(req: Request, res: Response) {
+    const resp = await SQL("SELECT * FROM notas");
+    if (resp.error) {
+      res.status(400).send({ error: resp.error.message });
+      return;
+    }
+    res.status(200).send(resp.rows);
+    return resp;
+  }
   //INSERIR NOTAS
   static async insertNotas(req: Request, res: Response) {
     const { alunoId, nota1, nota2, nota3, nota4 } = req.body;
