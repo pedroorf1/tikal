@@ -18,50 +18,20 @@ describe("TESTE API NOTAS - HOME ROUTES TESTE", () => {
   });
 });
 
-describe("TESTE API NOTAS - TEACHER ROUTES TESTE", () => {
-  test("should have a list of stundents", async () => {
-    const response = await supertest(App).get("/professor");
+describe("TESTE API NOTAS - STUDENT ROUTES TESTE", () => {
+  test("should have a stundents list of points", async () => {
+    const response = await supertest(App).get("/aluno/2");
     expect(response.statusCode).toBe(200);
     return;
   });
 });
 
 describe("TESTE API NOTAS - STUDENTS ROUTES TESTE", () => {
-  test("should have create a stundent", async () => {
-    const response = await supertest(App).post("/alunos").send({
-      name: "Raimundo fernando",
-    });
-    expect(response.body.message).toEqual("Aluno cadastrado");
-    expect(response.statusCode).toBe(200);
-    return;
-  });
-  test("should have add full notes for student", async () => {
-    const response = await supertest(App).post("/professor").send({
-      alunoId: 1,
-      nota1: 5.5,
-      nota2: 5.5,
-      nota3: 5.5,
-      nota4: 5.5,
-    });
-    expect(response.body).toHaveProperty("message");
-    expect(response.statusCode).toBe(200);
-    return;
-  });
-  test.only("should have update full notes for student", async () => {
-    console.clear();
-    console.log(
-      "===================\n===================\n===================\n===================\n"
-    );
-    const response = await supertest(App).post("/professor").send({
-      alunoId: 2,
-      nota1: 5.9,
-      nota2: 5.5,
-      nota3: 7.0,
-      nota4: 8.0,
-    });
-    console.debug("RESPOSTA: ", response.body);
-    expect(response.body).toHaveProperty("message");
-    expect(response.statusCode).toBe(200);
+  test("should have create a status code 401 couse id not passed", async () => {
+    const response = await supertest(App).get("/aluno");
+    console.info(response.body);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.statusCode).toBe(401);
     return;
   });
 });

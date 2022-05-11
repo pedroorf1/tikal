@@ -1,6 +1,6 @@
 import server from "./src/server/server";
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4500;
 const AppName = process.env.APP_NAME || "Api professor";
 
 server.listen(PORT, () => {

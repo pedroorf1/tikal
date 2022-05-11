@@ -1,7 +1,7 @@
 {
-  "name": "professor",
+  "name": "aluno",
   "version": "1.0.0",
-  "description": "desafio tikal - api professor",
+  "description": "desafio tikal - api aluno",
   "main": "index.js",
   "type": "module",
   "scripts": {

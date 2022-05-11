@@ -23,9 +23,7 @@ async function connect() {
 }
 
 async function SQL(params: string) {
-  console.info(
-    "-------------------------------------------------------------------------------------------------------------------------------------------------"
-  );
+  console.info("------------------\n---------------------");
   if (!params) {
     return { message: "A query precisa ser enviada" };
   }
